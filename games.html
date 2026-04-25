@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artics Games</title>
+
+<style>
+:root {
+    color-scheme: dark;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #070b16;
+    color: #eef2ff;
+    overflow-x: hidden;
+    cursor: none;
+}
+
+/* BACKGROUND */
+#particles, #grid, #scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+#grid {
+    background-image:
+        linear-gradient(rgba(123,91,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(123,91,255,0.08) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 12s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes gridMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(60px); }
+}
+
+#scanlines {
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.02),
+        rgba(255,255,255,0.02) 1px,
+        transparent 1px,
+        transparent 4px
+    );
+    opacity: 0.25;
+}
+
+/* CONTENT */
+.page-shell {
+    position: relative;
+    z-index: 5;
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.page-header {
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    letter-spacing: 5px;
+    margin: 0;
+}
+
+#searchBar {
+    width: 100%;
+    max-width: 420px;
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 999px;
+    border: none;
+    text-align: center;
+    background: rgba(255,255,255,0.08);
+    color: white;
+}
+
+/* GRID */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* GAME CARD */
+.game-card {
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.05);
+    transition: 0.2s;
+}
+
+.game-card:hover {
+    transform: translateY(-5px) scale(1.03);
+}
+
+/* THUMBNAIL */
+.game-thumbnail img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+}
+
+/* LABEL */
+.game-label {
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* HOME */
+.home-button {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 10;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg,#ff5b77,#7b5bff);
+    color: white;
+    text-decoration: none;
+}
+
+/* CURSOR */
+.cursor {
+    width: 14px;
+    height: 14px;
+    background: #7b5bff;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    box-shadow: 0 0 20px #7b5bff;
+}
+
+/* GAME PLAYER OVERLAY */
+#gamePlayer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: black;
+    z-index: 99999;
+}
+
+#gameFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 100000;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg,#ff5b77,#7b5bff);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="grid"></div>
+<div id="scanlines"></div>
+
+<div class="cursor"></div>
+
+<a class="home-button" href="index.html">🏠 Home</a>
+
+<div class="page-shell">
+
+<div class="page-header">
+    <h1>Artics Games</h1>
+    <input id="searchBar" placeholder="Search games...">
+</div>
+
+<div class="game-grid">
+
+<!-- GAME CARDS (FIXED CLICK SYSTEM) -->
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('granny.html')">
+    <div class="game-thumbnail">
+      <img src="https://play-lh.googleusercontent.com/WsUsst7uXYvpXzaL1XF7wRDpE1ZvF0XqRRgj0Dvti5VPRnHfFhQLuVKl2p2Zun-oyQ=w526-h296-rw">
+      <div class="game-label">Granny</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('gorillatag.html')">
+    <div class="game-thumbnail">
+      <img src="https://cdn.prod.website-files.com/634dcd98720fb26a457ae36f/673756bda746759466bf6931_GT_Web-Thumb-TMUpdate.png">
+      <div class="game-label">Gorilla Tag</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('speedstars.html')">
+     <div class="game-thumbnail">
+      <img src="https://speedstarsfree.io/cache/data/image/game/speed-stars-free-f240x240.webp">
+      <div class="game-label">Speed Stars</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('brainrot.html')">
+     <div class="game-thumbnail">
+      <img src="https://massivelyop.com/wp-content/uploads/2026/01/roblox-steal-a-brainrot-696x229.jpg">
+      <div class="game-label">Steal a brainrot</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('tunghorror.html')">
+     <div class="game-thumbnail">
+      <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2907810/0206e554a612fbfbc0c926ce1675805525dd20ff/header.jpg?t=1768253380">
+      <div class="game-label">Tung Sahur Horror</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('backrooms.html')">
+     <div class="game-thumbnail">
+      <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1825160/header.jpg?t=1731691712">
+      <div class="game-label">Backrooms</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('99nights.html')">
+     <div class="game-thumbnail">
+      <img src="https://assets-prd.ignimgs.com/2025/11/01/99nights-1762035403533.jpg?crop=1%3A1%2Csmart&format=jpg&auto=webp&quality=80">
+      <div class="game-label">99 Nights</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('growagarden.html')">
+     <div class="game-thumbnail">
+      <img src="https://spectator.com/wp-content/uploads/2025/07/5Julygamer.png?resize=720,720">
+      <div class="game-label">Grow a Garden</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('gunspin.html')">
+     <div class="game-thumbnail">
+      <img src="https://cdn.izzygames.com/flash_thumb/gunspin.webp">
+      <div class="game-label">GunSpin</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('getyoked.html')">
+     <div class="game-thumbnail">
+      <img src="https://img.itch.zone/aW1nLzE5NDg4MDY1LnBuZw==/original/0eezqm.png">
+      <div class="game-label">Get Yoked</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('gotobed.html')">
+     <div class="game-thumbnail">
+      <img src="https://images.dwncdn.net/images/t_app-icon-s/p/f3d27d6d-0765-43b0-ae75-19b120eeb470/3169631547/go-to-bed-logo">
+      <div class="game-label">Go To Bed</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('geometry.html')">
+     <div class="game-thumbnail">
+      <img src="https://www.versionmuseum.com/images/games/geometry-dash/geometry-dash-logo-900x330.png">
+      <div class="game-label">Geometry Dash</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('pretendnotthere.html')">
+     <div class="game-thumbnail">
+      <img src="https://i.ytimg.com/vi/iiO2z7Pw2gM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAQ334oGv7DaqEfc_VGulGdScgV5w">
+      <div class="game-label">Pretend It's Not There</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('retrobowlcollege.html')">
+     <div class="game-thumbnail">
+      <img src="https://retrobowl-college.io/cache/data/image/game/retro-bowl-college-online-f190x160.png">
+      <div class="game-label">Retro Bowl College</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('soccordurbey.html')">
+     <div class="game-thumbnail">
+      <img src="https://geometry-games.io/cache/data/image/game/rocket-soccer-derby/rocket-soccer-derby-m320x190.webp">
+      <div class="game-label">Rocket Soccer</div>
+    </div>
+  </a>
+</div>
+
+<div class="game-card">
+  <a href="#" onclick="loadGame('fivenightsatepstiens.html')">
+     <div class="game-thumbnail">
+      <img src="https://geometrylitepc.io/cache/data/image/game/five-nights-at-epsteins-m160x96.jpg">
+      <div class="game-label">Five Night's at epsteins</div>
+    </div>
+  </a>
+</div>
+
+<!-- GAME PLAYER -->
+<div id="gamePlayer">
+    <button class="close-btn" onclick="closeGame()">🏠 Close</button>
+    <iframe id="gameFrame"></iframe>
+</div>
+
+<script>
+function loadGame(url) {
+    document.getElementById("gamePlayer").style.display = "block";
+    document.getElementById("gameFrame").src = url;
+}
+
+function closeGame() {
+    document.getElementById("gamePlayer").style.display = "none";
+    document.getElementById("gameFrame").src = "";
+}
+
+/* CURSOR */
+const cursor = document.querySelector(".cursor");
+
+document.addEventListener("mousemove", (e) => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+});
+</script>
+
+</body>
+</html>
